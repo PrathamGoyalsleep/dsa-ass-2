@@ -1,26 +1,30 @@
-#include <iostream>
-#include <vector>
-#include <stack>
+#include <bits/stdc++.h>
 using namespace std;
 
-vector<int> nearestSmallerLeft(const vector<int>& arr) {
-    stack<int> s;
-    vector<int> result;
-    for (int x : arr) {
-        while (!s.empty() && s.top() >= x) {
-            s.pop();
+void f(int arr[], int n) {
+    stack<int> st;
+
+    for (int i = 0; i < n; i++) {
+        // Pop elements from stack while they are >= current element
+        while (!st.empty() && st.top() >= arr[i]) {
+            st.pop();
         }
-        if (s.empty()) result.push_back(-1);
-        else result.push_back(s.top());
-        s.push(x);
+
+        // If stack empty, no smaller element on left
+        if (st.empty()) {
+            cout << -1 << " ";
+        } else {
+            cout << st.top() << " ";
+        }
+
+        // Push current element into stack
+        st.push(arr[i]);
     }
-    return result;
+    cout << endl;
 }
 
 int main() {
-    vector<int> arr = {1, 3, 0, 2, 5};
-    vector<int> res = nearestSmallerLeft(arr);
-    for (int x : res) cout << x << " ";
-    cout << endl;
+    int arr[5] = {1, 3, 0, 2, 5};
+    f(arr, 5);
     return 0;
 }
